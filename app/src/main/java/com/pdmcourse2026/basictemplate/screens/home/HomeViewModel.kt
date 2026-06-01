@@ -1,10 +1,6 @@
 package com.pdmcourse2026.basictemplate.screens.home
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.pdmcourse2026.basictemplate.data.repository.Repository
 import com.pdmcourse2026.basictemplate.data.repository.impl.RepositoryImpl
 import com.pdmcourse2026.basictemplate.model.Option
@@ -58,5 +54,11 @@ class HomeViewModel() : ViewModel() {
 
     fun getErrorMessage(): String {
         return "Hubo un error. Presiona el botón para recargar."
+    }
+
+    fun selectItem(id: Int) {
+        viewModelScope.launch {
+
+        }
     }
 }

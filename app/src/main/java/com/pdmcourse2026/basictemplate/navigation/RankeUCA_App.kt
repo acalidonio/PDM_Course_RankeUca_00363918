@@ -23,7 +23,8 @@ fun RankeUCA_App() {
                 HomeScreen(
                     navigateToResults = {
                         backStack.add(Routes.Results)
-                    }
+                    },
+                    //selectItem = 1
                 )
             }
             entry<Routes.Results> {

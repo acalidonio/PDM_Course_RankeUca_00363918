@@ -12,12 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,6 +29,7 @@ import com.pdmcourse2026.basictemplate.screens.AppScaffold
 @Composable
 fun HomeScreen(
     navigateToResults: () -> Unit,
+    //selectItem: () -> Unit,
     viewModel: HomeViewModel = viewModel()
 ) {
     val options by viewModel.options.collectAsState()
@@ -78,24 +74,10 @@ fun HomeScreen(
         return
     }
 
-    /*Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = { Text("RankeUca - Vota") },
-            )
-        }
-    ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            Text(text = "Home Screen")
-        }
-    }*/
-
     AppScaffold(
-        title = "RankeUca - Vota"
+        title = "RankeUca - Vota",
+        bottomBarText = "Vota",
+        onFabClick = navigateToResults,
     ) { padding ->
         PullToRefreshBox(
             isRefreshing = refreshing,
@@ -106,14 +88,26 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
-                    .padding(16.dp),
+                    .padding(16.dp)
             ) {
                 items(options) { option ->
-                    VotingOption(
-                        option = option
-                    )
+                    Button(
+                        onClick = { viewModel.selectItem(option.id) }
+                    ) {
+                        VotingOption(
+                            option = option
+                        )
+                    }
                     Spacer(modifier = Modifier.height(12.dp))
                 }
+            }
+            Button(
+                onClick = navigateToResults
+            ) {
+                Text(
+                    text = "Ver resultados",
+                    color = Color.Black
+                )
             }
         }
     }
