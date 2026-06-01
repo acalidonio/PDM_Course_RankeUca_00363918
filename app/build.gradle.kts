@@ -13,6 +13,8 @@ if (localPropertiesFile.exists()) {
   localProperties.load(FileInputStream(localPropertiesFile))
 }
 
+val apiToken: String = localProperties.getProperty("TOKEN") ?: ""
+
 android {
   namespace = "com.pdmcourse2026.basictemplate"
   compileSdk {
@@ -30,7 +32,7 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    //buildConfigField("String", "API_TOKEN", "\"$apiToken\"")
+    buildConfigField("String", "API_TOKEN", "\"$apiToken\"")
   }
 
   buildTypes {
@@ -58,6 +60,8 @@ dependencies {
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.material.icons.core)
+  implementation(libs.androidx.compose.material.icons.extended)
 
   implementation(libs.androidx.navigation3.runtime)
   implementation(libs.androidx.navigation3.ui)

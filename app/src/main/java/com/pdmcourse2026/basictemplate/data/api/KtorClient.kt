@@ -1,6 +1,7 @@
 package com.pdmcourse2026.basictemplate.data.api
 
 import android.util.Log
+import com.pdmcourse2026.basictemplate.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -14,6 +15,9 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 object KtorClient {
+  private const val BASE_URL = "https://qjcxdvfzyseuvezacxsd.supabase.co/functions/v1/rankeuca/"
+  private const val API_KEY = BuildConfig.API_TOKEN
+
   val client = HttpClient(OkHttp) {
     // Parseo automático de JSON
     install(ContentNegotiation) {
@@ -34,6 +38,7 @@ object KtorClient {
 
     // Configuración aplicada a todas las peticiones
     defaultRequest {
+      header(HttpHeaders.Authorization, "Bearer $API_KEY")
       header(HttpHeaders.Accept, "application/json")
     }
   }
