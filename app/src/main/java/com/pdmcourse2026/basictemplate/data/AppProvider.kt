@@ -2,10 +2,8 @@ package com.pdmcourse2026.basictemplate.data
 
 import android.content.Context
 import com.pdmcourse2026.basictemplate.data.database.AppDatabase
-import com.pdmcourse2026.basictemplate.data.repository.OptionRepository
-import com.pdmcourse2026.basictemplate.data.repository.QuestionRepository
-import com.pdmcourse2026.basictemplate.data.repository.impl.OptionRepositoryImpl
-import com.pdmcourse2026.basictemplate.data.repository.impl.QuestionRepositoryImpl
+import com.pdmcourse2026.basictemplate.data.repository.QuestionOfflineFirstRepository
+import com.pdmcourse2026.basictemplate.data.repository.impl.QuestionOfflineFirstRepositoryImpl
 
 class AppProvider(context: Context) {
 
@@ -13,14 +11,9 @@ class AppProvider(context: Context) {
     private val optionDao = appDatabase.optionDao()
     private val questionDao = appDatabase.questionDao()
 
-    private val optionRepository: OptionRepository = OptionRepositoryImpl(optionDao)
-    private val questionRepository: QuestionRepository = QuestionRepositoryImpl(questionDao)
+    private val offlineFirstRepository: QuestionOfflineFirstRepository = QuestionOfflineFirstRepositoryImpl(questionDao, optionDao)
 
-    fun provideOptionRepository(): OptionRepository {
-        return optionRepository
-    }
-
-    fun provideQuestionRepository(): QuestionRepository {
-        return questionRepository
+    fun provideRepository(): QuestionOfflineFirstRepository {
+        return offlineFirstRepository
     }
 }
