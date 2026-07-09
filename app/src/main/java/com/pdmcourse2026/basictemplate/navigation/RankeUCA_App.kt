@@ -10,6 +10,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.pdmcourse2026.basictemplate.screens.home.HomeScreen
 import com.pdmcourse2026.basictemplate.screens.results.ResultsScreen
+import com.pdmcourse2026.basictemplate.screens.options.OptionsScreen
 
 @Composable
 fun RankeUCA_App() {
@@ -23,6 +24,9 @@ fun RankeUCA_App() {
                 HomeScreen(
                     onNavigateToResults = {
                         backStack.add(Routes.Results)
+                    },
+                    onNavigateToAdmin = {
+                        backStack.add(Routes.AdminOptions)
                     }
                 )
             }
@@ -32,6 +36,9 @@ fun RankeUCA_App() {
                         backStack.removeLastOrNull()
                     }
                 )
+            }
+            entry<Routes.AdminOptions> {
+                OptionsScreen()
             }
         },
         transitionSpec = {
