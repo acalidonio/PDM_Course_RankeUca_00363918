@@ -5,6 +5,7 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.google.devtools.ksp)
 }
 
 val localProperties = Properties()
@@ -74,6 +75,11 @@ dependencies {
   implementation(libs.ktor.client.content.negotiation)
   implementation(libs.ktor.serialization.kotlinx.json)
   implementation(libs.ktor.client.logging)
+  implementation(libs.ktor.client.auth)
+  implementation(libs.androidx.datastore.preferences)
+  implementation(libs.androidx.lifecycle.runtime.compose)
+  implementation(libs.androidx.room3.runtime)
+  ksp(libs.androidx.room3.compiler)
 
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
