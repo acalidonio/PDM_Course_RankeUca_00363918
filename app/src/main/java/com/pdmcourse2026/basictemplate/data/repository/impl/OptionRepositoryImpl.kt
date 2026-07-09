@@ -4,7 +4,7 @@ import com.pdmcourse2026.basictemplate.data.database.dao.OptionDao
 import com.pdmcourse2026.basictemplate.data.repository.OptionRepository
 import com.pdmcourse2026.basictemplate.model.Option
 import com.pdmcourse2026.basictemplate.model.toEntity
-import com.pdmcourse2026.basictemplate.model.toModel
+import com.pdmcourse2026.basictemplate.data.database.entities.toModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,12 +18,16 @@ class OptionRepositoryImpl(
         }
     }
 
-    override suspend fun addOption(name: String, imageUrl: String, questionId: Int) {
-        val option = Option(name = name, imageUrl = imageUrl, questionId = questionId)
+    override suspend fun addOption(value: String, imageUrl: String?, questionId: Int) {
+        val option = Option(value = value, imageUrl = imageUrl, questionId = questionId)
         optionDao.insertOption(option.toEntity())
     }
 
     override suspend fun deleteOption(option: Option) {
         optionDao.deleteOption(option.toEntity())
+    }
+
+    override suspend fun updateOption(option: Option) {
+        optionDao.updateOption(option.toEntity())
     }
 }

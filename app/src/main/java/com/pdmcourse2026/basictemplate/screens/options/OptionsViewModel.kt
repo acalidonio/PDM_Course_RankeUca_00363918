@@ -26,15 +26,21 @@ class OptionsViewModel(
                 initialValue = emptyList()
             )
 
-    fun addOption(name: String, imageUrl: String) {
+    fun addOption(value: String, imageUrl: String?) {
         viewModelScope.launch {
-            optionRepository.addOption(name, imageUrl, questionId)
+            optionRepository.addOption(value, imageUrl, questionId)
         }
     }
 
     fun deleteOption(option: Option) {
         viewModelScope.launch {
             optionRepository.deleteOption(option)
+        }
+    }
+
+    fun updateOption(option: Option) {
+        viewModelScope.launch {
+            optionRepository.updateOption(option)
         }
     }
 

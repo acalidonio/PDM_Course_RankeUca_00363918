@@ -12,21 +12,39 @@ import com.pdmcourse2026.basictemplate.screens.home.HomeScreen
 import com.pdmcourse2026.basictemplate.screens.results.ResultsScreen
 import com.pdmcourse2026.basictemplate.screens.options.OptionsScreen
 
+import com.pdmcourse2026.basictemplate.screens.home.MenuScreen
+import com.pdmcourse2026.basictemplate.screens.questions.QuestionsScreen
+
 @Composable
 fun RankeUCA_App() {
-    val backStack = rememberNavBackStack(Routes.Home)
+    val backStack = rememberNavBackStack(Routes.Menu)
 
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
+            entry<Routes.Menu> {
+                MenuScreen(
+                    onNavigateToAdmin = { backStack.add(Routes.AdminQuestions) }
+                )
+            }
+            entry<Routes.AdminQuestions> {
+                QuestionsScreen(
+                    onQuestionClick = { questionId -> 
+                        backStack.add(Routes.AdminOptions(questionId))
+                    }
+                )
+            }
+            entry<Routes.AdminOptions> {
+                OptionsScreen(questionId = it.questionId)
+            }
             entry<Routes.Home> {
                 HomeScreen(
                     onNavigateToResults = {
                         backStack.add(Routes.Results)
                     },
                     onNavigateToAdmin = {
-                        backStack.add(Routes.AdminOptions)
+                        backStack.add(Routes.AdminQuestions)
                     }
                 )
             }
@@ -36,9 +54,6 @@ fun RankeUCA_App() {
                         backStack.removeLastOrNull()
                     }
                 )
-            }
-            entry<Routes.AdminOptions> {
-                OptionsScreen()
             }
         },
         transitionSpec = {

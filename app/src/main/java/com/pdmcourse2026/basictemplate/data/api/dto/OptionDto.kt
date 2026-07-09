@@ -15,7 +15,7 @@ fun OptionDto.toModel(): Option {
     return Option(
         id = id,
         imageUrl = imageUrl,
-        name = name,
+        value = name,
         votes = votes
     )
 }

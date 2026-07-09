@@ -5,6 +5,7 @@ import androidx.room3.Delete
 import androidx.room3.Insert
 import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
+import androidx.room3.Update
 import com.pdmcourse2026.basictemplate.data.database.entities.OptionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,7 @@ interface OptionDao {
 
     @Delete
     suspend fun deleteOption(option: OptionEntity)
+
+    @Update
+    suspend fun updateOption(option: OptionEntity)
 }

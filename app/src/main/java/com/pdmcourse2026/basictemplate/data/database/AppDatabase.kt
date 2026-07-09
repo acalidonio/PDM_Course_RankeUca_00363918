@@ -11,7 +11,7 @@ import com.pdmcourse2026.basictemplate.data.database.entities.QuestionEntity
 
 @Database(
     entities = [QuestionEntity::class, OptionEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

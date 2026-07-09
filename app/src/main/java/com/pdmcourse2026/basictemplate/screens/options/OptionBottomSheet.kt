@@ -24,17 +24,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+import com.pdmcourse2026.basictemplate.model.Option
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OptionBottomSheet(
-    onSave: (name: String, imageUrl: String) -> Unit,
+    optionToEdit: Option? = null,
+    onSave: (value: String, imageUrl: String?) -> Unit,
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
-    var name by rememberSaveable { mutableStateOf("") }
-    var imageUrl by rememberSaveable { mutableStateOf("") }
+    var value by rememberSaveable { mutableStateOf(optionToEdit?.value ?: "") }
+    var imageUrl by rememberSaveable { mutableStateOf(optionToEdit?.imageUrl ?: "") }
 
-    val isValid = name.isNotBlank() && imageUrl.isNotBlank()
+    val isValid = value.isNotBlank()
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -48,20 +51,20 @@ fun OptionBottomSheet(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Nueva opción",
+                text = if (optionToEdit == null) "Nueva opción" else "Editar opción",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Agrega nombre e imagen para que aparezca en la lista.",
+                text = "Agrega el valor y una imagen opcional para la opción.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Nombre del lugar") },
+                value = value,
+                onValueChange = { value = it },
+                label = { Text("Valor a votar (ej. Nombre del lugar)") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -69,7 +72,7 @@ fun OptionBottomSheet(
             OutlinedTextField(
                 value = imageUrl,
                 onValueChange = { imageUrl = it },
-                label = { Text("URL de la imagen") },
+                label = { Text("URL de la imagen (Opcional)") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -83,7 +86,8 @@ fun OptionBottomSheet(
                 Button(
                     onClick = {
                         if (isValid) {
-                            onSave(name.trim(), imageUrl.trim())
+                            val finalImage = imageUrl.trim().takeIf { it.isNotEmpty() }
+                            onSave(value.trim(), finalImage)
                             onDismiss()
                         }
                     },

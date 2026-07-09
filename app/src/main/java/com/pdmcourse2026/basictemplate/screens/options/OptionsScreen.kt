@@ -3,6 +3,7 @@ package com.pdmcourse2026.basictemplate.screens.options
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pdmcourse2026.basictemplate.model.Option
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,6 +49,7 @@ fun OptionsScreen(
 ) {
     val options by viewModel.options.collectAsStateWithLifecycle()
     var showSheet by rememberSaveable { mutableStateOf(false) }
+    var optionToEdit by rememberSaveable { mutableStateOf<Option?>(null) }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
@@ -106,7 +110,7 @@ fun OptionsScreen(
                             ListItem(
                                 headlineContent = {
                                     Text(
-                                        text = option.name,
+                                        text = option.value,
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                 },
@@ -120,12 +124,24 @@ fun OptionsScreen(
                                     }
                                 },
                                 trailingContent = {
-                                    IconButton(onClick = { viewModel.deleteOption(option) }) {
-                                        Icon(
-                                            imageVector = Icons.Default.DeleteOutline,
-                                            contentDescription = "Borrar ${option.name}",
-                                            tint = MaterialTheme.colorScheme.error
-                                        )
+                                    Row {
+                                        IconButton(onClick = {
+                                            optionToEdit = option
+                                            showSheet = true
+                                        }) {
+                                            Icon(
+                                                imageVector = Icons.Default.Edit,
+                                                contentDescription = "Editar",
+                                                tint = MaterialTheme.colorScheme.primary
+                                            )
+                                        }
+                                        IconButton(onClick = { viewModel.deleteOption(option) }) {
+                                            Icon(
+                                                imageVector = Icons.Default.DeleteOutline,
+                                                contentDescription = "Borrar ${option.value}",
+                                                tint = MaterialTheme.colorScheme.error
+                                            )
+                                        }
                                     }
                                 }
                             )
@@ -138,8 +154,13 @@ fun OptionsScreen(
 
     if (showSheet) {
         OptionBottomSheet(
-            onSave = { name, imageUrl ->
-                viewModel.addOption(name, imageUrl)
+            optionToEdit = optionToEdit,
+            onSave = { value, imageUrl ->
+                if (optionToEdit == null) {
+                    viewModel.addOption(value, imageUrl)
+                } else {
+                    viewModel.updateOption(optionToEdit!!.copy(value = value, imageUrl = imageUrl))
+                }
             },
             onDismiss = { showSheet = false }
         )

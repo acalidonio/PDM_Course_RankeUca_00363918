@@ -5,9 +5,13 @@ import kotlinx.serialization.Serializable
 
 sealed class Routes : NavKey {
   @Serializable
+  data object Menu : Routes()
+  @Serializable
   data object Home : Routes()
   @Serializable
   data object Results : Routes()
   @Serializable
-  data object AdminOptions : Routes()
+  data class AdminOptions(val questionId: Int) : Routes()
+  @Serializable
+  data object AdminQuestions : Routes()
 }
