@@ -21,17 +21,16 @@ fun RankeUCA_App() {
         entryProvider = entryProvider {
             entry<Routes.Home> {
                 HomeScreen(
-                    navigateToResults = {
+                    onNavigateToResults = {
                         backStack.add(Routes.Results)
-                    },
-                    //selectItem = 1
+                    }
                 )
             }
             entry<Routes.Results> {
                 ResultsScreen(
-                    /*navigateBack = {
+                    onNavigateBack = {
                         backStack.removeLastOrNull()
-                    }*/
+                    }
                 )
             }
         },

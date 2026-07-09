@@ -22,6 +22,9 @@ class HomeViewModel() : ViewModel() {
     private val _error = MutableStateFlow<String?>(null)
     val error = _error.asStateFlow()
 
+    private val _votedOptionId = MutableStateFlow<Int?>(null)
+    val votedOptionId = _votedOptionId.asStateFlow()
+
     init {
         loadOptions()
     }
@@ -56,9 +59,26 @@ class HomeViewModel() : ViewModel() {
         return "Hubo un error. Presiona el botón para recargar."
     }
 
-    fun selectItem(id: Int) {
-        viewModelScope.launch {
+    fun resetSelection() {
+        _votedOptionId.value = null
+    }
 
+    fun selectItem(id: Int) {
+        if (_loading.value || _votedOptionId.value != null) return
+        
+        viewModelScope.launch {
+            _loading.value = true
+            _error.value = null
+            
+            postRepository.vote(id)
+                .onSuccess {
+                    _votedOptionId.value = id
+                }
+                .onFailure { _ ->
+                    _error.value = getErrorMessage()
+                }
+            
+            _loading.value = false
         }
     }
 }
