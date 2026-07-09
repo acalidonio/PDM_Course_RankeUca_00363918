@@ -39,7 +39,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OptionsScreen(
-    viewModel: OptionsViewModel = viewModel(factory = OptionsViewModel.Factory)
+    questionId: Int,
+    viewModel: OptionsViewModel = viewModel(
+        factory = OptionsViewModel.provideFactory(questionId)
+    )
 ) {
     val options by viewModel.options.collectAsStateWithLifecycle()
     var showSheet by rememberSaveable { mutableStateOf(false) }

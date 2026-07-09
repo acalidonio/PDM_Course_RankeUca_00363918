@@ -7,6 +7,7 @@ data class Option (
     val imageUrl : String?,
     val name : String,
     val votes : Int = 0,
+    val questionId: Int = 0,
 )
 
 fun OptionEntity.toModel(): Option {
@@ -23,5 +24,6 @@ fun Option.toEntity(): OptionEntity {
         id = id,
         name = name,
         imageUrl = imageUrl,
+        questionId = questionId
     )
 }
