@@ -14,4 +14,6 @@ sealed class Routes : NavKey {
   data class AdminOptions(val questionId: Int) : Routes()
   @Serializable
   data object AdminQuestions : Routes()
+  @Serializable
+  data object MassVote : Routes()
 }

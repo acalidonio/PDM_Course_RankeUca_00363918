@@ -31,7 +31,9 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(
-    onNavigateToAdmin: () -> Unit
+    onNavigateToAdmin: () -> Unit,
+    onNavigateToVote: () -> Unit,
+    onNavigateToMassVote: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -56,11 +58,19 @@ fun MenuScreen(
             )
 
             MenuCard(
-                title = "Votar",
-                subtitle = "Próximamente",
+                title = "Voto",
+                subtitle = "Vota en una pregunta",
                 icon = Icons.Default.HowToVote,
-                onClick = { /* No hace nada */ },
-                enabled = false
+                onClick = onNavigateToVote,
+                enabled = true
+            )
+
+            MenuCard(
+                title = "Voto Masivo",
+                subtitle = "Vota en varias preguntas",
+                icon = Icons.Default.HowToVote,
+                onClick = onNavigateToMassVote,
+                enabled = true
             )
         }
     }

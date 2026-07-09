@@ -1,7 +1,10 @@
 package com.pdmcourse2026.basictemplate.data.api
 
+import com.pdmcourse2026.basictemplate.data.api.dto.CreateMassVoteRequestDto
 import com.pdmcourse2026.basictemplate.data.api.dto.OptionDto
 import com.pdmcourse2026.basictemplate.data.api.dto.QuestionDto
+import com.pdmcourse2026.basictemplate.data.api.dto.QuestionsDto
+import com.pdmcourse2026.basictemplate.data.api.dto.VoteDto
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -69,5 +72,16 @@ class RankeUcaApi {
 
     suspend fun deleteOption(id: Int) {
         client.delete("options/$id")
+    }
+
+    suspend fun getQuestionsP3(): List<QuestionsDto> {
+        return client.get("parcialtres/questions").body()
+    }
+
+    suspend fun postQuestionsP3(votes: List<VoteDto>) {
+        client.post("parcialtres/votes") {
+            contentType(ContentType.Application.Json)
+            setBody(CreateMassVoteRequestDto(votes))
+        }
     }
 }

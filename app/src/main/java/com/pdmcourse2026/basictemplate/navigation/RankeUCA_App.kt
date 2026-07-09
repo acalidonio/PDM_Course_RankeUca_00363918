@@ -13,6 +13,7 @@ import com.pdmcourse2026.basictemplate.screens.results.ResultsScreen
 import com.pdmcourse2026.basictemplate.screens.options.OptionsScreen
 
 import com.pdmcourse2026.basictemplate.screens.home.MenuScreen
+import com.pdmcourse2026.basictemplate.screens.massvote.MassVoteScreen
 import com.pdmcourse2026.basictemplate.screens.questions.QuestionsScreen
 
 @Composable
@@ -25,7 +26,14 @@ fun RankeUCA_App() {
         entryProvider = entryProvider {
             entry<Routes.Menu> {
                 MenuScreen(
-                    onNavigateToAdmin = { backStack.add(Routes.AdminQuestions) }
+                    onNavigateToAdmin = { backStack.add(Routes.AdminQuestions) },
+                    onNavigateToVote = { backStack.add(Routes.Home) },
+                    onNavigateToMassVote = { backStack.add(Routes.MassVote) }
+                )
+            }
+            entry<Routes.MassVote> {
+                MassVoteScreen(
+                    onNavigateToResults = { backStack.add(Routes.Results) }
                 )
             }
             entry<Routes.AdminQuestions> {

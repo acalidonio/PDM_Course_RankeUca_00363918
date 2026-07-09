@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuestionOfflineFirstRepository {
 
-    // Leer: de Room (fuente de verdad)
+    // Leer de Room (fuente de verdad)
     fun getQuestions(): Flow<List<Question>>
     fun getOptions(questionId: Int): Flow<List<Option>>
 
-    // Sincronizar: API -> Room
+    // Sincronizar de API a Room
     suspend fun refresh()
 
-    // Mutar: API -> luego refresh()
+    // API luego refresh()
     suspend fun createQuestion(text: String)
     suspend fun updateQuestion(id: Int, text: String)
     suspend fun deleteQuestion(id: Int)
