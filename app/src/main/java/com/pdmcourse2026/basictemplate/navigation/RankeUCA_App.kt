@@ -16,7 +16,10 @@ import com.pdmcourse2026.basictemplate.screens.home.MenuScreen
 import com.pdmcourse2026.basictemplate.screens.questions.QuestionsScreen
 
 @Composable
-fun RankeUCA_App() {
+fun RankeUCA_App(
+    userName: String?,
+    onLogout: () -> Unit
+) {
     val backStack = rememberNavBackStack(Routes.Menu)
 
     NavDisplay(
@@ -25,6 +28,8 @@ fun RankeUCA_App() {
         entryProvider = entryProvider {
             entry<Routes.Menu> {
                 MenuScreen(
+                    userName = userName,
+                    onLogout = onLogout,
                     onNavigateToAdmin = { backStack.add(Routes.AdminQuestions) }
                 )
             }

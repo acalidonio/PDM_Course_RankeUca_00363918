@@ -27,6 +27,13 @@ data class UpdateOptionRequest(val value: String)
 class RankeUcaApi {
     private val client = KtorClient.client
 
+    suspend fun login(request: com.pdmcourse2026.basictemplate.data.api.dto.LoginRequestDto): com.pdmcourse2026.basictemplate.data.api.dto.LoginResponseDto {
+        return client.post("auth/login") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }.body()
+    }
+
     suspend fun getQuestions(): List<QuestionDto> {
         return client.get("questions").body()
     }
